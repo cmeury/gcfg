@@ -1,0 +1,24 @@
+#!/bin/sh
+# Quick gcloud configuration switcher
+
+set -eu
+
+if [ ! -x "$(which gcloud 2>/dev/null)" ]; then
+  echo "please install: gcloud (https://cloud.google.com/sdk/docs/quickstarts)" >&2
+  exit 1
+fi
+if [ ! -x "$(which fzf 2>/dev/null)" ]; then
+  echo "please install: fzf (https://github.com/junegunn/fzf)" >&2
+  exit 1
+fi
+
+active="$(gcloud config configurations list --format='csv[no-heading](name)' --filter='is_active=True')"
+if [ -z "$active" ]; then
+  active="default"
+fi
+
+selected=$( ( gcloud config configurations list --format='csv[no-heading](name)' --filter="name!=$active" | xargs -n1; echo $active ) | fzf -0 -1 --tac -q "${1:-""}" --prompt "$active> " --preview "gcloud config configurations describe {}" )
+if [ ! -z "$selected" ]; then
+  set -x
+  gcloud config configurations activate "$selected"
+fi
