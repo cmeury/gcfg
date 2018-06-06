@@ -9,7 +9,7 @@ It is directly inspired by the Kubernetes namespace switcher [kns](https://githu
 ![Demo](.github/gcfgdemo.gif)
 
 ## Installation
-To install **kns** you can just run this command:
+To install **gcfg** you can just run this command:
 ```bash
 curl https://raw.githubusercontent.com/cmeury/gcfg/master/bin/gcfg -o /usr/local/bin/gcfg && chmod +x $_
 ```
