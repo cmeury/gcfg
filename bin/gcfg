@@ -20,8 +20,7 @@ fi
 
 selected=$( \
   ( gcloud config configurations list --format='csv[no-heading](name)' --filter="name!=$active" | xargs -n1; echo $active ) \
-  | fzf -0 -1 --tac -q "${1:-""}" --prompt "$active> " \
-  --preview "echo '=== gcloud configuration ==='; echo; gcloud config configurations describe {}" \
+  | fzf -0 -1 --tac -q "${1:-""}" --preview "gcloud config configurations describe {}" \
 )
 if [ ! -z "$selected" ]; then
   set -x
