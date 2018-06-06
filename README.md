@@ -3,7 +3,7 @@
 **gcfg** is a very small shellscript that utilizes [fzf](https://git.io/C4FBDw)
 to switch between gcloud configurations blazingly fast. :fire:
 
-It is directly inspired by the [Kubernetes namespace switcher `kns`](https://github.com/blendle/kns).
+It is directly inspired by the Kubernetes namespace switcher [kns](https://github.com/blendle/kns).
 
 ## Demo
 # ![Demo](.github/kns-demo.gif)
