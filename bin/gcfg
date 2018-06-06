@@ -12,12 +12,24 @@ if [ ! -x "$(which fzf 2>/dev/null)" ]; then
   exit 1
 fi
 
-active="$(gcloud config configurations list --format='csv[no-heading](name)' --filter='is_active=True')"
+active="$(gcloud config configurations list --format='csv[no-heading](name)' \
+                                            --filter='is_active=True')"
 if [ -z "$active" ]; then
   active="default"
 fi
 
-selected=$( ( gcloud config configurations list --format='csv[no-heading](name)' --filter="name!=$active" | xargs -n1; echo $active ) | fzf -0 -1 --tac -q "${1:-""}" --prompt "$active> " --preview "gcloud config configurations describe {}" )
+if readlink "$0" >/dev/null; then
+  source="$(readlink "$0")"
+  dir=$(cd "$(dirname "$0")/$(dirname "$source")" && pwd)
+  prefix="$dir/.."
+else
+  prefix="$(dirname "$0")/.."
+fi
+
+selected=$( \
+  ( gcloud config configurations list --format='csv[no-heading](name)' --filter="name!=$active" | xargs -n1; echo $active ) \
+  | fzf -0 -1 --tac -q "${1:-""}" --prompt "$active> " --preview "$prefix/helpers/gcfg-preview.sh {}" \
+)
 if [ ! -z "$selected" ]; then
   set -x
   gcloud config configurations activate "$selected"
