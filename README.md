@@ -6,7 +6,7 @@ to switch between gcloud configurations blazingly fast. :fire:
 It is directly inspired by the Kubernetes namespace switcher [kns](https://github.com/blendle/kns).
 
 ## Demo
-![Demo](.github/gcfgdemo.gif.gif)
+![Demo](.github/gcfgdemo.gif)
 
 ## Installation
 To install **kns** you can just run this command:
